@@ -1,0 +1,192 @@
+function exercitiu(name) {
+   this.name = name;
+}
+
+let e = new exercitiu('aritmetica');
+console.log(e);
+
+
+function exercitiu1(name) {
+   this.name = name;
+   this.getName = function() {
+	return this.name;
+	} 
+}
+
+let e1 = new exercitiu1('geometrie');
+console.log(e1.getName());
+
+
+class rezolvare {
+  constructor(index) {
+    this.index = index;
+    this.products =  [];
+    
+  }
+  
+}
+let rez = new rezolvare();
+
+
+function exercitiu2(name, rezolvari = []) {
+   this.name = name;
+   this.rezolvari = rezolvari;
+   this.addRezolvare= function(value) {
+   		const rez = new rezolvare(value);
+   		this.rezolvari.push(rez);
+   }
+}
+
+let e2 = new exercitiu2('geometrie');
+e2.addRezolvare();
+console.log(e2);
+
+
+const eAsString = JSON.stringify(e2);
+console.log(eAsString);
+
+
+let e3  = JSON.parse(eAsString);
+console.log(e3);
+
+let e4 = new exercitiu2(e3.name, e3.rezolvare);
+console.log(e4);
+
+
+function exercitiu3(name, rezolvari = []) {
+	var owner = '';
+   this.name = name;
+   this.rezolvari = rezolvari;
+   this.adaugareRezolvare= function(value) {
+   		const rez = new rezolvare(value);
+   		this.rezolvari.push(rez);
+   }
+}
+
+let e5 = new exercitiu3('asd');
+e5.adaugareRezolvare(1);
+console.log(e5);
+
+
+const TIPURI_comentarii = {
+	corect: 1,
+	gresit: 2
+};
+
+function comentariu(data) {
+	const {id, name, tip, code } = data;
+	const produs = {
+		id,
+		name,
+		tip,
+		code
+	};
+
+	return comentariu;
+}
+
+class rezolvare1 {
+  constructor(rezolvareInfo) {
+  		const {
+  			index,
+  			products = [],
+  			tip
+  		} = rezolvareInfo;
+  		this.index = index;
+  		this.products = products || [];
+  		this.tip = tip;
+    }
+
+    adaugareComentariu = (comentariuData) => {
+    	const c = comentariu(comentariuData);
+    	this.products.push(c);	
+    }
+    stergereComentariu = (code) => {
+    	this.products = this.products.filter(el => el.code !== code);
+    }
+    editComentariu = (code, newValenta) => {
+    	const c =  this.products.find(el => el.code === code);
+    	c.valenta = newValenta;
+    }
+    sortare = () => {
+    	this.products = this.products.sort( (a,b) => a.index - b.index);
+    
+  }
+}
+
+function exercitiu4(name, rezolvare = []) {
+	var owner = '';
+   this.name = name;
+   this.rezolvare = rezolvare;
+   this.adaugareRezolvare= function(value) {
+   		const nrRezolvare = this.rezolvare.length;
+   		const rezolvareInfo = {
+   			index: nrRezolvare,
+   			tip: value.tip
+   		}
+   		const r = new rezolvare1(rezolvareInfo);
+   		this.rezolvare.push(r);
+   }
+   
+
+   this.adaugareComentariu= function(value) {
+
+   		const tipComentariu = value.tip;
+   		
+   		const r = this.rezolvare.find(el => el.tip === tipComentariu);
+   		if(!r) {
+   			throw "no rezolvare found for ", tipComentariu;
+   		}	
+
+   		const c = comentariu({
+   			id: rez.products.length,
+   			tip: tipComentariu,
+   			code: value.code,
+   			puncte: value.puncte
+   		});
+   		r.adaugareComentariu(c);
+   }
+
+   this.stergereComentariu= (tip, code) => {
+
+   		const r = this.rezolvare.find(el => el.tip === tip);
+   		if(!r) {
+   			throw "no rezolvare found for ", tipComentariu;
+   		}	
+   		r.stergereComentariu(code);
+   }
+
+      this.editComentariu= (tip, code, newValenta) => {
+
+   		const r = this.rezolvare.find(el => el.tip === tip);
+   		if(!r) {
+   			throw "no rezolvare found for ", tipComentariu;
+   		}	
+   		r.editComentariu(code, newValenta);
+   }
+
+   this.getProducts = () => {
+   		return this.rezolvare.reduce(function(list,r) {
+    		return list.concat(r.products);
+    	},[]);
+   }
+   
+}
+
+let e6 = new exercitiu4('algoritmica');
+e6.adaugareRezolvare({
+	tip: TIPURI_comentarii.corect
+});
+e6.adaugareRezolvare({
+	tip: TIPURI_comentarii.gresit
+});
+
+console.log(e6);
+
+e6.adaugareComentariu({
+	tip: TIPURI_comentarii.gresit,
+	puncte: 0,
+	code:'gresit'
+});
+
+console.log(e6);
